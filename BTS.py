@@ -1,3 +1,9 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+"""
+Increased the number of components that BTS fits from six to twelve.
+"""
+
 import numpy
 import matplotlib.pyplot
 from scipy.optimize import curve_fit
@@ -158,16 +164,16 @@ def fit_single_line(vel,x,params):
 		print "Peak width = ", psig
 		print " "
 
-	### if more than 6 components were detected then lets try fitting with 6
+	### if more than 12 components were detected then lets try fitting with 12
 
-	if(n_peaks>6):
+	if(n_peaks>12):
 
-		print "More than 6 peaks were detected. We will try to fit with just 6"
-		pamp=pamp[:6]
-		psig=psig[:6]
-		pcent = pcent[:6]
-		pid = pid[:6]
-		n_peaks = 6
+		print "More than 12 peaks were detected. We will try to fit with just 12"
+		pamp=pamp[:12]
+		psig=psig[:12]
+		pcent = pcent[:12]
+		pid = pid[:12]
+		n_peaks = 12
 	
 		if(debug==1):
 			matplotlib.pyplot.plot(vel,spec)
@@ -200,7 +206,7 @@ def fit_single_line(vel,x,params):
 		guess[3*ii+1] = pcent[ii]
 		guess[3*ii+2] = psig[ii]
 
-		bound[0][3*ii] = n*noise
+		bound[0][3*ii] = 0.5*n*noise
 		bound[1][3*ii] = 2*max(spec)
 		bound[0][3*ii+1] = minv
 		bound[1][3*ii+1] = maxv
@@ -323,8 +329,160 @@ def fit_single_line(vel,x,params):
 				
 				guess7[3*c_num:3*c_num+3] = guess6[3*ii:3*ii+3]
 				c_num=c_num+1
+                
+    	if(n_peaks>6):
+		bound8 = (numpy.zeros(3*n_peaks -18),numpy.zeros(3*n_peaks - 18))
 
+		for ii in range(0,n_peaks-6):
 
+			bound8[0][3*ii] = n*noise
+			bound8[1][3*ii] = 2*max(spec)
+			bound8[0][3*ii+1] = minv
+			bound8[1][3*ii+1] = maxv
+			bound8[0][3*ii+2] = dv
+			bound8[1][3*ii+2] = maxv-minv
+
+		guess8 = numpy.zeros(3*n_peaks-18)
+		min_amp_index = numpy.argmin(guess7[::3])
+		c_num=0
+		for ii in range(0,n_peaks-5):
+
+			if(ii!=min_amp_index):
+				
+				guess8[3*c_num:3*c_num+3] = guess7[3*ii:3*ii+3]
+				c_num=c_num+1
+                
+    	if(n_peaks>7):
+		bound9 = (numpy.zeros(3*n_peaks -21),numpy.zeros(3*n_peaks - 21))
+
+		for ii in range(0,n_peaks-7):
+
+			bound9[0][3*ii] = n*noise
+			bound9[1][3*ii] = 2*max(spec)
+			bound9[0][3*ii+1] = minv
+			bound9[1][3*ii+1] = maxv
+			bound9[0][3*ii+2] = dv
+			bound9[1][3*ii+2] = maxv-minv
+
+		guess9 = numpy.zeros(3*n_peaks-21)
+		min_amp_index = numpy.argmin(guess8[::3])
+		c_num=0
+		for ii in range(0,n_peaks-6):
+
+			if(ii!=min_amp_index):
+				
+				guess9[3*c_num:3*c_num+3] = guess8[3*ii:3*ii+3]
+				c_num=c_num+1
+                
+    	if(n_peaks>8):
+		bound10 = (numpy.zeros(3*n_peaks -24),numpy.zeros(3*n_peaks - 24))
+
+		for ii in range(0,n_peaks-8):
+
+			bound10[0][3*ii] = n*noise
+			bound10[1][3*ii] = 2*max(spec)
+			bound10[0][3*ii+1] = minv
+			bound10[1][3*ii+1] = maxv
+			bound10[0][3*ii+2] = dv
+			bound10[1][3*ii+2] = maxv-minv
+
+		guess10 = numpy.zeros(3*n_peaks-24)
+		min_amp_index = numpy.argmin(guess9[::3])
+		c_num=0
+		for ii in range(0,n_peaks-7):
+
+			if(ii!=min_amp_index):
+				
+				guess10[3*c_num:3*c_num+3] = guess9[3*ii:3*ii+3]
+				c_num=c_num+1
+
+    	if(n_peaks>9):
+		bound11 = (numpy.zeros(3*n_peaks -27),numpy.zeros(3*n_peaks - 27))
+
+		for ii in range(0,n_peaks-9):
+
+			bound11[0][3*ii] = n*noise
+			bound11[1][3*ii] = 2*max(spec)
+			bound11[0][3*ii+1] = minv
+			bound11[1][3*ii+1] = maxv
+			bound11[0][3*ii+2] = dv
+			bound11[1][3*ii+2] = maxv-minv
+
+		guess11 = numpy.zeros(3*n_peaks-27)
+		min_amp_index = numpy.argmin(guess10[::3])
+		c_num=0
+		for ii in range(0,n_peaks-8):
+
+			if(ii!=min_amp_index):
+				
+				guess11[3*c_num:3*c_num+3] = guess10[3*ii:3*ii+3]
+				c_num=c_num+1
+                
+    	if(n_peaks>10):
+		bound12 = (numpy.zeros(3*n_peaks -30),numpy.zeros(3*n_peaks - 30))
+
+		for ii in range(0,n_peaks-10):
+
+			bound12[0][3*ii] = n*noise
+			bound12[1][3*ii] = 2*max(spec)
+			bound12[0][3*ii+1] = minv
+			bound12[1][3*ii+1] = maxv
+			bound12[0][3*ii+2] = dv
+			bound12[1][3*ii+2] = maxv-minv
+
+		guess12 = numpy.zeros(3*n_peaks-30)
+		min_amp_index = numpy.argmin(guess11[::3])
+		c_num=0
+		for ii in range(0,n_peaks-9):
+
+			if(ii!=min_amp_index):
+				
+				guess12[3*c_num:3*c_num+3] = guess11[3*ii:3*ii+3]
+				c_num=c_num+1
+
+    	if(n_peaks>11):
+		bound13 = (numpy.zeros(3*n_peaks -33),numpy.zeros(3*n_peaks - 33))
+
+		for ii in range(0,n_peaks-11):
+
+			bound13[0][3*ii] = n*noise
+			bound13[1][3*ii] = 2*max(spec)
+			bound13[0][3*ii+1] = minv
+			bound13[1][3*ii+1] = maxv
+			bound13[0][3*ii+2] = dv
+			bound13[1][3*ii+2] = maxv-minv
+
+		guess13 = numpy.zeros(3*n_peaks-33)
+		min_amp_index = numpy.argmin(guess12[::3])
+		c_num=0
+		for ii in range(0,n_peaks-10):
+
+			if(ii!=min_amp_index):
+				
+				guess13[3*c_num:3*c_num+3] = guess12[3*ii:3*ii+3]
+				c_num=c_num+1
+                
+    	if(n_peaks>12):
+		bound14 = (numpy.zeros(3*n_peaks -36),numpy.zeros(3*n_peaks - 36))
+
+		for ii in range(0,n_peaks-12):
+
+			bound14[0][3*ii] = n*noise
+			bound14[1][3*ii] = 2*max(spec)
+			bound14[0][3*ii+1] = minv
+			bound14[1][3*ii+1] = maxv
+			bound14[0][3*ii+2] = dv
+			bound14[1][3*ii+2] = maxv-minv
+
+		guess14 = numpy.zeros(3*n_peaks-36)
+		min_amp_index = numpy.argmin(guess13[::3])
+		c_num=0
+		for ii in range(0,n_peaks-11):
+
+			if(ii!=min_amp_index):
+				
+				guess14[3*c_num:3*c_num+3] = guess13[3*ii:3*ii+3]
+				c_num=c_num+1
 
 
 	### Here we fit a single peak
@@ -734,8 +892,1109 @@ def fit_single_line(vel,x,params):
 			co_eff = co_eff2
 			var_matrix = var_matrix2
 			converged = converged2
+            
+            
+### If 7 peaks detected, fit 7, 6, 5, 4, 3, 2 and 1 peaks
 
+	elif(n_peaks==7):
+		r_chi_sq, res, co_eff, var_matrix, converged = fit7(vel,spec,guess,bound,noise)
 
+		r_chi_sq2, res2, co_eff2, var_matrix2, converged2 = fit6(vel,spec,guess3,bound3,noise)
+
+		r_chi_sq3, res3, co_eff3, var_matrix3, converged3 = fit5(vel,spec,guess4,bound4,noise)
+
+		r_chi_sq4, res4, co_eff4, var_matrix4, converged4 = fit4(vel,spec,guess5,bound5,noise)
+
+		r_chi_sq5, res5, co_eff5, var_matrix5, converged5 = fit3(vel,spec,guess6,bound6,noise)
+
+		r_chi_sq6, res6, co_eff6, var_matrix6, converged6 = fit2(vel,spec,guess7,bound7,noise)
+        
+		r_chi_sq7, res7, co_eff7, var_matrix7, converged7 = fit1(vel,spec,guess8,bound8,noise)
+
+		if(r_chi_sq7<chi_limit and converged7==1):
+
+			n_peaks=1
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess8
+			bound = bound8
+			r_chi_sq = r_chi_sq7
+			res = res7
+			co_eff = co_eff7
+			var_matrix = var_matrix7
+			converged = converged7
+
+		elif(r_chi_sq6<chi_limit and converged6==1):
+
+			n_peaks=2
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess7
+			bound = bound7
+			r_chi_sq = r_chi_sq6
+			res = res6
+			co_eff = co_eff6
+			var_matrix = var_matrix6
+			converged = converged6
+
+		elif(r_chi_sq5<chi_limit and converged5==1):
+
+			n_peaks=3
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess6
+			bound = bound6
+			r_chi_sq = r_chi_sq5
+			res = res5
+			co_eff = co_eff5
+			var_matrix = var_matrix5
+			converged = converged5
+
+		elif(r_chi_sq4<chi_limit and converged4==1):
+
+			n_peaks=4
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess5
+			bound = bound5
+			r_chi_sq = r_chi_sq4
+			res = res4
+			co_eff = co_eff4
+			var_matrix = var_matrix4
+			converged = converged4
+
+		elif(r_chi_sq3<chi_limit and converged3==1):
+
+			n_peaks=5
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess4
+			bound = bound4
+			r_chi_sq = r_chi_sq3
+			res = res3
+			co_eff = co_eff3
+			var_matrix = var_matrix3
+			converged = converged3
+
+		elif(r_chi_sq2<chi_limit and converged2==1):
+
+			n_peaks=6
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess3
+			bound = bound3
+			r_chi_sq = r_chi_sq2
+			res = res2
+			co_eff = co_eff2
+			var_matrix = var_matrix2
+			converged = converged2
+
+### If 8 peaks detected, fit 8, 7, 6, 5, 4, 3, 2 and 1 peaks
+
+	elif(n_peaks==8):
+		r_chi_sq, res, co_eff, var_matrix, converged = fit8(vel,spec,guess,bound,noise)
+
+		r_chi_sq2, res2, co_eff2, var_matrix2, converged2 = fit7(vel,spec,guess3,bound3,noise)
+
+		r_chi_sq3, res3, co_eff3, var_matrix3, converged3 = fit6(vel,spec,guess4,bound4,noise)
+
+		r_chi_sq4, res4, co_eff4, var_matrix4, converged4 = fit5(vel,spec,guess5,bound5,noise)
+
+		r_chi_sq5, res5, co_eff5, var_matrix5, converged5 = fit4(vel,spec,guess6,bound6,noise)
+
+		r_chi_sq6, res6, co_eff6, var_matrix6, converged6 = fit3(vel,spec,guess7,bound7,noise)
+        
+		r_chi_sq7, res7, co_eff7, var_matrix7, converged7 = fit2(vel,spec,guess8,bound8,noise)
+        
+		r_chi_sq8, res8, co_eff8, var_matrix8, converged8 = fit1(vel,spec,guess9,bound9,noise)
+
+		if(r_chi_sq8<chi_limit and converged8==1):
+
+			n_peaks=1
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess9
+			bound = bound9
+			r_chi_sq = r_chi_sq8
+			res = res8
+			co_eff = co_eff8
+			var_matrix = var_matrix8
+			converged = converged8
+
+		elif(r_chi_sq7<chi_limit and converged7==1):
+
+			n_peaks=2
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess8
+			bound = bound8
+			r_chi_sq = r_chi_sq7
+			res = res7
+			co_eff = co_eff7
+			var_matrix = var_matrix7
+			converged = converged7
+
+		elif(r_chi_sq6<chi_limit and converged6==1):
+
+			n_peaks=3
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess7
+			bound = bound7
+			r_chi_sq = r_chi_sq6
+			res = res6
+			co_eff = co_eff6
+			var_matrix = var_matrix6
+			converged = converged6
+
+		elif(r_chi_sq5<chi_limit and converged5==1):
+
+			n_peaks=4
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess6
+			bound = bound6
+			r_chi_sq = r_chi_sq5
+			res = res5
+			co_eff = co_eff5
+			var_matrix = var_matrix5
+			converged = converged5
+
+		elif(r_chi_sq4<chi_limit and converged4==1):
+
+			n_peaks=5
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess5
+			bound = bound5
+			r_chi_sq = r_chi_sq4
+			res = res4
+			co_eff = co_eff4
+			var_matrix = var_matrix4
+			converged = converged4
+
+		elif(r_chi_sq3<chi_limit and converged3==1):
+
+			n_peaks=6
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess4
+			bound = bound4
+			r_chi_sq = r_chi_sq3
+			res = res3
+			co_eff = co_eff3
+			var_matrix = var_matrix3
+			converged = converged3
+
+		elif(r_chi_sq2<chi_limit and converged2==1):
+
+			n_peaks=7
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess3
+			bound = bound3
+			r_chi_sq = r_chi_sq2
+			res = res2
+			co_eff = co_eff2
+			var_matrix = var_matrix2
+			converged = converged2
+            
+### If 9 peaks detected, fit 9, 8, 7, 6, 5, 4, 3, 2 and 1 peaks
+
+	elif(n_peaks==9):
+		r_chi_sq, res, co_eff, var_matrix, converged = fit9(vel,spec,guess,bound,noise)
+
+		r_chi_sq2, res2, co_eff2, var_matrix2, converged2 = fit8(vel,spec,guess3,bound3,noise)
+
+		r_chi_sq3, res3, co_eff3, var_matrix3, converged3 = fit7(vel,spec,guess4,bound4,noise)
+
+		r_chi_sq4, res4, co_eff4, var_matrix4, converged4 = fit6(vel,spec,guess5,bound5,noise)
+
+		r_chi_sq5, res5, co_eff5, var_matrix5, converged5 = fit5(vel,spec,guess6,bound6,noise)
+
+		r_chi_sq6, res6, co_eff6, var_matrix6, converged6 = fit4(vel,spec,guess7,bound7,noise)
+        
+		r_chi_sq7, res7, co_eff7, var_matrix7, converged7 = fit3(vel,spec,guess8,bound8,noise)
+        
+		r_chi_sq8, res8, co_eff8, var_matrix8, converged8 = fit2(vel,spec,guess9,bound9,noise)
+        
+		r_chi_sq9, res9, co_eff9, var_matrix9, converged9 = fit1(vel,spec,guess10,bound10,noise)        
+
+		if(r_chi_sq9<chi_limit and converged9==1):
+
+			n_peaks=1
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess10
+			bound = bound10
+			r_chi_sq = r_chi_sq9
+			res = res9
+			co_eff = co_eff9
+			var_matrix = var_matrix9
+			converged = converged9
+
+		elif(r_chi_sq8<chi_limit and converged8==1):
+
+			n_peaks=2
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess9
+			bound = bound9
+			r_chi_sq = r_chi_sq8
+			res = res8
+			co_eff = co_eff8
+			var_matrix = var_matrix8
+			converged = converged8
+
+		elif(r_chi_sq7<chi_limit and converged7==1):
+
+			n_peaks=3
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess8
+			bound = bound8
+			r_chi_sq = r_chi_sq7
+			res = res7
+			co_eff = co_eff7
+			var_matrix = var_matrix7
+			converged = converged7
+
+		elif(r_chi_sq6<chi_limit and converged6==1):
+
+			n_peaks=4
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess7
+			bound = bound7
+			r_chi_sq = r_chi_sq6
+			res = res6
+			co_eff = co_eff6
+			var_matrix = var_matrix6
+			converged = converged6
+
+		elif(r_chi_sq5<chi_limit and converged5==1):
+
+			n_peaks=5
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess6
+			bound = bound6
+			r_chi_sq = r_chi_sq5
+			res = res5
+			co_eff = co_eff5
+			var_matrix = var_matrix5
+			converged = converged5
+
+		elif(r_chi_sq4<chi_limit and converged4==1):
+
+			n_peaks=6
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess5
+			bound = bound5
+			r_chi_sq = r_chi_sq4
+			res = res4
+			co_eff = co_eff4
+			var_matrix = var_matrix4
+			converged = converged4
+
+		elif(r_chi_sq3<chi_limit and converged3==1):
+
+			n_peaks=7
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess4
+			bound = bound4
+			r_chi_sq = r_chi_sq3
+			res = res3
+			co_eff = co_eff3
+			var_matrix = var_matrix3
+			converged = converged3
+
+		elif(r_chi_sq2<chi_limit and converged2==1):
+
+			n_peaks=8
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess3
+			bound = bound3
+			r_chi_sq = r_chi_sq2
+			res = res2
+			co_eff = co_eff2
+			var_matrix = var_matrix2
+			converged = converged2
+            
+            
+### If 10 peaks detected, fit 10, 9, 8, 7, 6, 5, 4, 3, 2 and 1 peaks
+
+	elif(n_peaks==10):
+		r_chi_sq, res, co_eff, var_matrix, converged = fit10(vel,spec,guess,bound,noise)
+
+		r_chi_sq2, res2, co_eff2, var_matrix2, converged2 = fit9(vel,spec,guess3,bound3,noise)
+
+		r_chi_sq3, res3, co_eff3, var_matrix3, converged3 = fit8(vel,spec,guess4,bound4,noise)
+
+		r_chi_sq4, res4, co_eff4, var_matrix4, converged4 = fit7(vel,spec,guess5,bound5,noise)
+
+		r_chi_sq5, res5, co_eff5, var_matrix5, converged5 = fit6(vel,spec,guess6,bound6,noise)
+
+		r_chi_sq6, res6, co_eff6, var_matrix6, converged6 = fit5(vel,spec,guess7,bound7,noise)
+        
+		r_chi_sq7, res7, co_eff7, var_matrix7, converged7 = fit4(vel,spec,guess8,bound8,noise)
+        
+		r_chi_sq8, res8, co_eff8, var_matrix8, converged8 = fit3(vel,spec,guess9,bound9,noise)
+        
+		r_chi_sq9, res9, co_eff9, var_matrix9, converged9 = fit2(vel,spec,guess10,bound10,noise)     
+        
+		r_chi_sq10, res10, co_eff10, var_matrix10, converged10 = fit1(vel,spec,guess11,bound11,noise)         
+
+		if(r_chi_sq10<chi_limit and converged10==1):
+
+			n_peaks=1
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess11
+			bound = bound11
+			r_chi_sq = r_chi_sq10
+			res = res10
+			co_eff = co_eff10
+			var_matrix = var_matrix10
+			converged = converged10
+
+		elif(r_chi_sq9<chi_limit and converged9==1):
+
+			n_peaks=2
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess10
+			bound = bound10
+			r_chi_sq = r_chi_sq9
+			res = res9
+			co_eff = co_eff9
+			var_matrix = var_matrix9
+			converged = converged9
+
+		elif(r_chi_sq8<chi_limit and converged8==1):
+
+			n_peaks=3
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess9
+			bound = bound9
+			r_chi_sq = r_chi_sq8
+			res = res8
+			co_eff = co_eff8
+			var_matrix = var_matrix8
+			converged = converged8
+
+		elif(r_chi_sq7<chi_limit and converged7==1):
+
+			n_peaks=4
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess8
+			bound = bound8
+			r_chi_sq = r_chi_sq7
+			res = res7
+			co_eff = co_eff7
+			var_matrix = var_matrix7
+			converged = converged7
+
+		elif(r_chi_sq6<chi_limit and converged6==1):
+
+			n_peaks=5
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess7
+			bound = bound7
+			r_chi_sq = r_chi_sq6
+			res = res6
+			co_eff = co_eff6
+			var_matrix = var_matrix6
+			converged = converged6
+
+		elif(r_chi_sq5<chi_limit and converged5==1):
+
+			n_peaks=6
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess6
+			bound = bound6
+			r_chi_sq = r_chi_sq5
+			res = res5
+			co_eff = co_eff5
+			var_matrix = var_matrix5
+			converged = converged5
+
+		elif(r_chi_sq4<chi_limit and converged4==1):
+
+			n_peaks=7
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess5
+			bound = bound5
+			r_chi_sq = r_chi_sq4
+			res = res4
+			co_eff = co_eff4
+			var_matrix = var_matrix4
+			converged = converged4
+
+		elif(r_chi_sq3<chi_limit and converged3==1):
+
+			n_peaks=8
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess4
+			bound = bound4
+			r_chi_sq = r_chi_sq3
+			res = res3
+			co_eff = co_eff3
+			var_matrix = var_matrix3
+			converged = converged3
+            
+		elif(r_chi_sq2<chi_limit and converged2==1):
+
+			n_peaks=9
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess3
+			bound = bound3
+			r_chi_sq = r_chi_sq2
+			res = res2
+			co_eff = co_eff2
+			var_matrix = var_matrix2
+			converged = converged2
+            
+### If 11 peaks detected, fit 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 and 1 peaks
+
+	elif(n_peaks==11):
+		r_chi_sq, res, co_eff, var_matrix, converged = fit11(vel,spec,guess,bound,noise)
+
+		r_chi_sq2, res2, co_eff2, var_matrix2, converged2 = fit10(vel,spec,guess3,bound3,noise)
+
+		r_chi_sq3, res3, co_eff3, var_matrix3, converged3 = fit9(vel,spec,guess4,bound4,noise)
+
+		r_chi_sq4, res4, co_eff4, var_matrix4, converged4 = fit8(vel,spec,guess5,bound5,noise)
+
+		r_chi_sq5, res5, co_eff5, var_matrix5, converged5 = fit7(vel,spec,guess6,bound6,noise)
+
+		r_chi_sq6, res6, co_eff6, var_matrix6, converged6 = fit6(vel,spec,guess7,bound7,noise)
+        
+		r_chi_sq7, res7, co_eff7, var_matrix7, converged7 = fit5(vel,spec,guess8,bound8,noise)
+        
+		r_chi_sq8, res8, co_eff8, var_matrix8, converged8 = fit4(vel,spec,guess9,bound9,noise)
+        
+		r_chi_sq9, res9, co_eff9, var_matrix9, converged9 = fit3(vel,spec,guess10,bound10,noise)     
+        
+		r_chi_sq10, res10, co_eff10, var_matrix10, converged10 = fit2(vel,spec,guess11,bound11,noise)         
+        
+		r_chi_sq11, res11, co_eff11, var_matrix11, converged11 = fit1(vel,spec,guess12,bound12,noise)         
+
+		if(r_chi_sq11<chi_limit and converged11==1):
+
+			n_peaks=1
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess12
+			bound = bound12
+			r_chi_sq = r_chi_sq11
+			res = res11
+			co_eff = co_eff11
+			var_matrix = var_matrix11
+			converged = converged11
+
+		elif(r_chi_sq10<chi_limit and converged10==1):
+
+			n_peaks=2
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess11
+			bound = bound11
+			r_chi_sq = r_chi_sq10
+			res = res10
+			co_eff = co_eff10
+			var_matrix = var_matrix10
+			converged = converged10
+
+		elif(r_chi_sq9<chi_limit and converged9==1):
+
+			n_peaks=3
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess10
+			bound = bound10
+			r_chi_sq = r_chi_sq9
+			res = res9
+			co_eff = co_eff9
+			var_matrix = var_matrix9
+			converged = converged9
+
+		elif(r_chi_sq8<chi_limit and converged8==1):
+
+			n_peaks=4
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess9
+			bound = bound9
+			r_chi_sq = r_chi_sq8
+			res = res8
+			co_eff = co_eff8
+			var_matrix = var_matrix8
+			converged = converged8
+
+		elif(r_chi_sq7<chi_limit and converged7==1):
+
+			n_peaks=5
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess8
+			bound = bound8
+			r_chi_sq = r_chi_sq7
+			res = res7
+			co_eff = co_eff7
+			var_matrix = var_matrix7
+			converged = converged7
+
+		elif(r_chi_sq6<chi_limit and converged6==1):
+
+			n_peaks=6
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess7
+			bound = bound7
+			r_chi_sq = r_chi_sq6
+			res = res6
+			co_eff = co_eff6
+			var_matrix = var_matrix6
+			converged = converged6
+
+		elif(r_chi_sq5<chi_limit and converged5==1):
+
+			n_peaks=7
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess6
+			bound = bound6
+			r_chi_sq = r_chi_sq5
+			res = res5
+			co_eff = co_eff5
+			var_matrix = var_matrix5
+			converged = converged5
+
+		elif(r_chi_sq4<chi_limit and converged4==1):
+
+			n_peaks=8
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess5
+			bound = bound5
+			r_chi_sq = r_chi_sq4
+			res = res4
+			co_eff = co_eff4
+			var_matrix = var_matrix4
+			converged = converged4
+            
+		elif(r_chi_sq3<chi_limit and converged3==1):
+
+			n_peaks=9
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess4
+			bound = bound4
+			r_chi_sq = r_chi_sq3
+			res = res3
+			co_eff = co_eff3
+			var_matrix = var_matrix3
+			converged = converged3
+            
+		elif(r_chi_sq2<chi_limit and converged2==1):
+
+			n_peaks=10
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess3
+			bound = bound3
+			r_chi_sq = r_chi_sq2
+			res = res2
+			co_eff = co_eff2
+			var_matrix = var_matrix2
+			converged = converged2          
+            
+### If 12 peaks detected, fit 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 and 1 peaks
+
+	elif(n_peaks==12):
+		r_chi_sq, res, co_eff, var_matrix, converged = fit12(vel,spec,guess,bound,noise)
+
+		r_chi_sq2, res2, co_eff2, var_matrix2, converged2 = fit11(vel,spec,guess3,bound3,noise)
+
+		r_chi_sq3, res3, co_eff3, var_matrix3, converged3 = fit10(vel,spec,guess4,bound4,noise)
+
+		r_chi_sq4, res4, co_eff4, var_matrix4, converged4 = fit9(vel,spec,guess5,bound5,noise)
+
+		r_chi_sq5, res5, co_eff5, var_matrix5, converged5 = fit8(vel,spec,guess6,bound6,noise)
+
+		r_chi_sq6, res6, co_eff6, var_matrix6, converged6 = fit7(vel,spec,guess7,bound7,noise)
+        
+		r_chi_sq7, res7, co_eff7, var_matrix7, converged7 = fit6(vel,spec,guess8,bound8,noise)
+        
+		r_chi_sq8, res8, co_eff8, var_matrix8, converged8 = fit5(vel,spec,guess9,bound9,noise)
+        
+		r_chi_sq9, res9, co_eff9, var_matrix9, converged9 = fit4(vel,spec,guess10,bound10,noise)     
+        
+		r_chi_sq10, res10, co_eff10, var_matrix10, converged10 = fit3(vel,spec,guess11,bound11,noise)         
+        
+		r_chi_sq11, res11, co_eff11, var_matrix11, converged11 = fit2(vel,spec,guess12,bound12,noise)        
+        
+		r_chi_sq12, res12, co_eff12, var_matrix12, converged12 = fit1(vel,spec,guess13,bound13,noise) 
+
+		if(r_chi_sq12<chi_limit and converged12==1):
+
+			n_peaks=1
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess13
+			bound = bound13
+			r_chi_sq = r_chi_sq12
+			res = res12
+			co_eff = co_eff12
+			var_matrix = var_matrix12
+			converged = converged12
+
+		elif(r_chi_sq11<chi_limit and converged11==1):
+
+			n_peaks=2
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess12
+			bound = bound12
+			r_chi_sq = r_chi_sq11
+			res = res11
+			co_eff = co_eff11
+			var_matrix = var_matrix11
+			converged = converged11
+
+		elif(r_chi_sq10<chi_limit and converged10==1):
+
+			n_peaks=3
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess11
+			bound = bound11
+			r_chi_sq = r_chi_sq10
+			res = res10
+			co_eff = co_eff10
+			var_matrix = var_matrix10
+			converged = converged10
+
+		elif(r_chi_sq9<chi_limit and converged9==1):
+
+			n_peaks=4
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess10
+			bound = bound10
+			r_chi_sq = r_chi_sq9
+			res = res9
+			co_eff = co_eff9
+			var_matrix = var_matrix9
+			converged = converged9
+
+		elif(r_chi_sq8<chi_limit and converged8==1):
+
+			n_peaks=5
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess9
+			bound = bound9
+			r_chi_sq = r_chi_sq8
+			res = res8
+			co_eff = co_eff8
+			var_matrix = var_matrix8
+			converged = converged8
+
+		elif(r_chi_sq7<chi_limit and converged7==1):
+
+			n_peaks=6
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess8
+			bound = bound8
+			r_chi_sq = r_chi_sq7
+			res = res7
+			co_eff = co_eff7
+			var_matrix = var_matrix7
+			converged = converged7
+
+		elif(r_chi_sq6<chi_limit and converged6==1):
+
+			n_peaks=7
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess7
+			bound = bound7
+			r_chi_sq = r_chi_sq6
+			res = res6
+			co_eff = co_eff6
+			var_matrix = var_matrix6
+			converged = converged6
+
+		elif(r_chi_sq5<chi_limit and converged5==1):
+
+			n_peaks=8
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess6
+			bound = bound6
+			r_chi_sq = r_chi_sq5
+			res = res5
+			co_eff = co_eff5
+			var_matrix = var_matrix5
+			converged = converged5
+            
+		elif(r_chi_sq4<chi_limit and converged4==1):
+
+			n_peaks=9
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess3
+			bound = bound3
+			r_chi_sq = r_chi_sq2
+			res = res2
+			co_eff = co_eff2
+			var_matrix = var_matrix2
+			converged = converged2
+            
+		elif(r_chi_sq3<chi_limit and converged3==1):
+
+			n_peaks=10
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess4
+			bound = bound4
+			r_chi_sq = r_chi_sq3
+			res = res3
+			co_eff = co_eff3
+			var_matrix = var_matrix3
+			converged = converged3     
+            
+		elif(r_chi_sq2<chi_limit and converged2==1):
+
+			n_peaks=11
+
+			guess = numpy.zeros(3*n_peaks)
+			bound = (numpy.zeros(3*n_peaks),numpy.zeros(3*n_peaks))
+			guess = numpy.array(guess,dtype=numpy.double)
+
+			co_eff = numpy.zeros(3*n_peaks)
+			var_matrix = numpy.zeros((3*n_peaks,3*n_peaks))
+
+			guess = guess3
+			bound = bound3
+			r_chi_sq = r_chi_sq2
+			res = res2
+			co_eff = co_eff2
+			var_matrix = var_matrix2
+			converged = converged2   
 
 
 	### If no fit converged then we exit
@@ -785,6 +2044,19 @@ def fit_single_line(vel,x,params):
 			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit4(vel,spec,guess2,bound2,noise)
 		if(n_peaks==6):
 			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit5(vel,spec,guess2,bound2,noise)
+		if(n_peaks==7):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit6(vel,spec,guess2,bound2,noise)
+		if(n_peaks==8):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit7(vel,spec,guess2,bound2,noise)
+		if(n_peaks==9):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit8(vel,spec,guess2,bound2,noise)
+		if(n_peaks==10):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit9(vel,spec,guess2,bound2,noise)
+		if(n_peaks==11):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit10(vel,spec,guess2,bound2,noise)
+		if(n_peaks==12):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit11(vel,spec,guess2,bound2,noise)            
+            
 
 		if(debug==1):
 			print "##### After overlap reduction #####"
@@ -807,7 +2079,7 @@ def fit_single_line(vel,x,params):
 
 	
 	## No overlap and the fit converged but it isn't that good
-	if(overlap==0 and r_chi_sq > chi_limit and n_peaks<6):
+	if(overlap==0 and r_chi_sq > chi_limit and n_peaks<12):
 
 		### Add more guesses and bounds. We take the location of maximum residuial as the place to add a component.
 		guess2 = numpy.zeros(len(guess) + 3)
@@ -843,6 +2115,18 @@ def fit_single_line(vel,x,params):
 			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit5(vel,spec,guess2,bound2,noise)	
 		if(n_peaks==5):
 			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit6(vel,spec,guess2,bound2,noise)	
+		if(n_peaks==6):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit7(vel,spec,guess2,bound2,noise)	
+		if(n_peaks==7):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit8(vel,spec,guess2,bound2,noise)	
+		if(n_peaks==8):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit9(vel,spec,guess2,bound2,noise)	
+		if(n_peaks==9):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit10(vel,spec,guess2,bound2,noise)	   
+		if(n_peaks==10):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit11(vel,spec,guess2,bound2,noise)	
+		if(n_peaks==11):
+			r_chi_sq2, res2, co_eff2, var_matrix2, converged = fit12(vel,spec,guess2,bound2,noise)	
 
 
 		if(debug==1):
@@ -884,7 +2168,7 @@ def fit_single_line(vel,x,params):
 
 		return co_eff,r_chi_sq
 
-	if(overlap==0 and r_chi_sq>chi_limit and n_peaks==6):
+	if(overlap==0 and r_chi_sq>chi_limit and n_peaks==12):
 
 		return co_eff,r_chi_sq
 
@@ -1414,7 +2698,7 @@ def fit_a_fits(param_file):
 
 	### Just counters
 
-	count = numpy.zeros(6)
+	count = numpy.zeros(12)
 	no_con = 0
 
 
@@ -1458,6 +2742,7 @@ def fit_a_fits(param_file):
 			n = len(co_eff[::3])
 			count[n-1] = count[n-1] + 1
 
+
 			### Loop over the components found and store in the 4 output arrays
 
 			for kk in range(0,n):
@@ -1486,6 +2771,13 @@ def fit_a_fits(param_file):
 	print "There are %d spectra with 4 component, %.2f %% of total fitted spectra" %(count[3], 100*numpy.float(count[3])/numpy.sum(count))
 	print "There are %d spectra with 5 component, %.2f %% of total fitted spectra" %(count[4], 100*numpy.float(count[4])/numpy.sum(count))
 	print "There are %d spectra with 6 component, %.2f %% of total fitted spectra" %(count[5], 100*numpy.float(count[5])/numpy.sum(count))
+    	print "There are %d spectra with 7 component, %.2f %% of total fitted spectra" %(count[6], 100*numpy.float(count[6])/numpy.sum(count))
+	print "There are %d spectra with 8 component, %.2f %% of total fitted spectra" %(count[7], 100*numpy.float(count[7])/numpy.sum(count))
+	print "There are %d spectra with 9 component, %.2f %% of total fitted spectra" %(count[8], 100*numpy.float(count[8])/numpy.sum(count))
+	print "There are %d spectra with 10 component, %.2f %% of total fitted spectra" %(count[9], 100*numpy.float(count[9])/numpy.sum(count))
+	print "There are %d spectra with 11 component, %.2f %% of total fitted spectra" %(count[10], 100*numpy.float(count[10])/numpy.sum(count))
+	print "There are %d spectra with 12 component, %.2f %% of total fitted spectra" %(count[11], 100*numpy.float(count[11])/numpy.sum(count))
+
 	print " "
 	if(no_con>0):
 		print "There was no convergence for %d spectra" %no_con
@@ -1557,6 +2849,25 @@ def gaussfive(x, a, x0, sigma, a2, x02, sigma2,a3,x03,sigma3,a4,x04,sigma4,a5,x0
 
 def gausssix(x, a, x0, sigma, a2, x02, sigma2,a3,x03,sigma3,a4,x04,sigma4,a5,x05,sigma5,a6,x06,sigma6):
     return a*numpy.exp(-(x-x0)**2/(2*sigma**2)) + a2*numpy.exp(-(x-x02)**2/(2*sigma2**2))+ a3*numpy.exp(-(x-x03)**2/(2*sigma3**2)) + a4*numpy.exp(-(x-x04)**2/(2*sigma4**2)) + a5*numpy.exp(-(x-x05)**2/(2*sigma5**2)) +a6*numpy.exp(-(x-x06)**2/(2*sigma6**2))
+
+def gaussseven(x, a, x0, sigma, a2, x02, sigma2,a3,x03,sigma3,a4,x04,sigma4,a5,x05,sigma5,a6,x06,sigma6,a7,x07,sigma7):
+    return a*numpy.exp(-(x-x0)**2/(2*sigma**2)) + a2*numpy.exp(-(x-x02)**2/(2*sigma2**2))+ a3*numpy.exp(-(x-x03)**2/(2*sigma3**2)) + a4*numpy.exp(-(x-x04)**2/(2*sigma4**2)) + a5*numpy.exp(-(x-x05)**2/(2*sigma5**2)) +a6*numpy.exp(-(x-x06)**2/(2*sigma6**2)) +a7*numpy.exp(-(x-x07)**2/(2*sigma7**2))
+
+def gausseight(x, a, x0, sigma, a2, x02, sigma2,a3,x03,sigma3,a4,x04,sigma4,a5,x05,sigma5,a6,x06,sigma6,a7,x07,sigma7,a8,x08,sigma8):
+    return a*numpy.exp(-(x-x0)**2/(2*sigma**2)) + a2*numpy.exp(-(x-x02)**2/(2*sigma2**2))+ a3*numpy.exp(-(x-x03)**2/(2*sigma3**2)) + a4*numpy.exp(-(x-x04)**2/(2*sigma4**2)) + a5*numpy.exp(-(x-x05)**2/(2*sigma5**2)) +a6*numpy.exp(-(x-x06)**2/(2*sigma6**2)) +a7*numpy.exp(-(x-x07)**2/(2*sigma7**2)) +a8*numpy.exp(-(x-x08)**2/(2*sigma8**2))
+
+def gaussnine(x, a, x0, sigma, a2, x02, sigma2,a3,x03,sigma3,a4,x04,sigma4,a5,x05,sigma5,a6,x06,sigma6,a7,x07,sigma7,a8,x08,sigma8,a9,x09,sigma9):
+    return a*numpy.exp(-(x-x0)**2/(2*sigma**2)) + a2*numpy.exp(-(x-x02)**2/(2*sigma2**2))+ a3*numpy.exp(-(x-x03)**2/(2*sigma3**2)) + a4*numpy.exp(-(x-x04)**2/(2*sigma4**2)) + a5*numpy.exp(-(x-x05)**2/(2*sigma5**2)) +a6*numpy.exp(-(x-x06)**2/(2*sigma6**2)) +a7*numpy.exp(-(x-x07)**2/(2*sigma7**2)) +a8*numpy.exp(-(x-x08)**2/(2*sigma8**2)) +a9*numpy.exp(-(x-x09)**2/(2*sigma9**2))
+
+def gaussten(x, a, x0, sigma, a2, x02, sigma2,a3,x03,sigma3,a4,x04,sigma4,a5,x05,sigma5,a6,x06,sigma6,a7,x07,sigma7,a8,x08,sigma8,a9,x09,sigma9,a10,x010,sigma10):
+    return a*numpy.exp(-(x-x0)**2/(2*sigma**2)) + a2*numpy.exp(-(x-x02)**2/(2*sigma2**2))+ a3*numpy.exp(-(x-x03)**2/(2*sigma3**2)) + a4*numpy.exp(-(x-x04)**2/(2*sigma4**2)) + a5*numpy.exp(-(x-x05)**2/(2*sigma5**2)) +a6*numpy.exp(-(x-x06)**2/(2*sigma6**2)) +a7*numpy.exp(-(x-x07)**2/(2*sigma7**2)) +a8*numpy.exp(-(x-x08)**2/(2*sigma8**2)) +a9*numpy.exp(-(x-x09)**2/(2*sigma9**2)) +a10*numpy.exp(-(x-x010)**2/(2*sigma10**2))
+
+def gausseleven(x, a, x0, sigma, a2, x02, sigma2,a3,x03,sigma3,a4,x04,sigma4,a5,x05,sigma5,a6,x06,sigma6,a7,x07,sigma7,a8,x08,sigma8,a9,x09,sigma9,a10,x010,sigma10,a11,x011,sigma11):
+    return a*numpy.exp(-(x-x0)**2/(2*sigma**2)) + a2*numpy.exp(-(x-x02)**2/(2*sigma2**2))+ a3*numpy.exp(-(x-x03)**2/(2*sigma3**2)) + a4*numpy.exp(-(x-x04)**2/(2*sigma4**2)) + a5*numpy.exp(-(x-x05)**2/(2*sigma5**2)) +a6*numpy.exp(-(x-x06)**2/(2*sigma6**2)) +a7*numpy.exp(-(x-x07)**2/(2*sigma7**2)) +a8*numpy.exp(-(x-x08)**2/(2*sigma8**2)) +a9*numpy.exp(-(x-x09)**2/(2*sigma9**2)) +a10*numpy.exp(-(x-x010)**2/(2*sigma10**2)) +a11*numpy.exp(-(x-x011)**2/(2*sigma11**2))
+
+def gausstwelve(x, a, x0, sigma, a2, x02, sigma2,a3,x03,sigma3,a4,x04,sigma4,a5,x05,sigma5,a6,x06,sigma6,a7,x07,sigma7,a8,x08,sigma8,a9,x09,sigma9,a10,x010,sigma10,a11,x011,sigma11,a12,x012,sigma12):
+    return a*numpy.exp(-(x-x0)**2/(2*sigma**2)) + a2*numpy.exp(-(x-x02)**2/(2*sigma2**2))+ a3*numpy.exp(-(x-x03)**2/(2*sigma3**2)) + a4*numpy.exp(-(x-x04)**2/(2*sigma4**2)) + a5*numpy.exp(-(x-x05)**2/(2*sigma5**2)) +a6*numpy.exp(-(x-x06)**2/(2*sigma6**2)) +a7*numpy.exp(-(x-x07)**2/(2*sigma7**2)) +a8*numpy.exp(-(x-x08)**2/(2*sigma8**2)) +a9*numpy.exp(-(x-x09)**2/(2*sigma9**2)) +a10*numpy.exp(-(x-x010)**2/(2*sigma10**2)) +a11*numpy.exp(-(x-x011)**2/(2*sigma11**2)) +a12*numpy.exp(-(x-x011)**2/(2*sigma11**2))
+
 
 
 
@@ -1729,3 +3040,130 @@ def fit6(vel,spec,guess,bound,noise):
 		var_matrix = 0
 
 	return r_chi_sq, res, co_eff, var_matrix, converged
+
+def fit7(vel,spec,guess,bound,noise):
+
+	try:
+		co_eff, var_matrix = curve_fit(gaussseven,vel,spec,p0=guess,method="trf",bounds=bound)
+
+		chi_sq = sum((spec-gaussseven(vel,*co_eff))**2) / noise**2
+		r_chi_sq = chi_sq / (len(spec) - 21)
+
+		fit = gaussseven(vel,*co_eff)
+		res = spec-fit
+		converged = 1
+
+	except RuntimeError:
+		converged = 0
+		r_chi_sq = 0
+		res = 0
+		co_eff = 0
+		var_matrix = 0
+
+	return r_chi_sq, res, co_eff, var_matrix, converged
+
+def fit8(vel,spec,guess,bound,noise):
+
+	try:
+		co_eff, var_matrix = curve_fit(gausseight,vel,spec,p0=guess,method="trf",bounds=bound)
+
+		chi_sq = sum((spec-gausseight(vel,*co_eff))**2) / noise**2
+		r_chi_sq = chi_sq / (len(spec) - 24)
+
+		fit = gausseight(vel,*co_eff)
+		res = spec-fit
+		converged = 1
+
+	except RuntimeError:
+		converged = 0
+		r_chi_sq = 0
+		res = 0
+		co_eff = 0
+		var_matrix = 0
+
+	return r_chi_sq, res, co_eff, var_matrix, converged
+
+def fit9(vel,spec,guess,bound,noise):
+
+	try:
+		co_eff, var_matrix = curve_fit(gaussnine,vel,spec,p0=guess,method="trf",bounds=bound)
+
+		chi_sq = sum((spec-gaussnine(vel,*co_eff))**2) / noise**2
+		r_chi_sq = chi_sq / (len(spec) - 27)
+
+		fit = gaussnine(vel,*co_eff)
+		res = spec-fit
+		converged = 1
+
+	except RuntimeError:
+		converged = 0
+		r_chi_sq = 0
+		res = 0
+		co_eff = 0
+		var_matrix = 0
+
+	return r_chi_sq, res, co_eff, var_matrix, converged
+
+def fit10(vel,spec,guess,bound,noise):
+
+	try:
+		co_eff, var_matrix = curve_fit(gaussten,vel,spec,p0=guess,method="trf",bounds=bound)
+
+		chi_sq = sum((spec-gaussten(vel,*co_eff))**2) / noise**2
+		r_chi_sq = chi_sq / (len(spec) - 30)
+
+		fit = gaussten(vel,*co_eff)
+		res = spec-fit
+		converged = 1
+
+	except RuntimeError:
+		converged = 0
+		r_chi_sq = 0
+		res = 0
+		co_eff = 0
+		var_matrix = 0
+
+	return r_chi_sq, res, co_eff, var_matrix, converged
+
+def fit11(vel,spec,guess,bound,noise):
+
+	try:
+		co_eff, var_matrix = curve_fit(gausseleven,vel,spec,p0=guess,method="trf",bounds=bound)
+
+		chi_sq = sum((spec-gausseleven(vel,*co_eff))**2) / noise**2
+		r_chi_sq = chi_sq / (len(spec) - 33)
+
+		fit = gausseleven(vel,*co_eff)
+		res = spec-fit
+		converged = 1
+
+	except RuntimeError:
+		converged = 0
+		r_chi_sq = 0
+		res = 0
+		co_eff = 0
+		var_matrix = 0
+
+	return r_chi_sq, res, co_eff, var_matrix, converged
+
+def fit12(vel,spec,guess,bound,noise):
+
+	try:
+		co_eff, var_matrix = curve_fit(gausstwelve,vel,spec,p0=guess,method="trf",bounds=bound)
+
+		chi_sq = sum((spec-gausstwelve(vel,*co_eff))**2) / noise**2
+		r_chi_sq = chi_sq / (len(spec) - 36)
+
+		fit = gausstwelve(vel,*co_eff)
+		res = spec-fit
+		converged = 1
+
+	except RuntimeError:
+		converged = 0
+		r_chi_sq = 0
+		res = 0
+		co_eff = 0
+		var_matrix = 0
+
+	return r_chi_sq, res, co_eff, var_matrix, converged
+
